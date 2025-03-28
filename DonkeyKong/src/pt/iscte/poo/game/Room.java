@@ -1,25 +1,40 @@
 package pt.iscte.poo.game;
 
+import objects.DonkeyKong;
 import objects.Manel;
-import objects.Wall;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
-import pt.iscte.poo.utils.Point2D;
+
+import static java.lang.System.out;
 
 public class Room {
-	
-	private final Point2D heroStartingPosition = new Point2D(1, 1);
-	private Manel manel;
-	
-	public Room() {
-		manel = new Manel(heroStartingPosition);
-		ImageGUI.getInstance().addImage(manel);
-		ImageGUI.getInstance().addImage(new Wall());
 
-	}
+	private Manel manel;
+
+	private DonkeyKong donkeyKong;
+
+	public Room() {
+
+		out.println(ImageGUI.getInstance());
+
+		FloorFill floor = new FloorFill();
+		floor.fill();
+
+		Map map = new Map("DonkeyKong/rooms/room0.txt");
+		map.obterCoordenadasRoom();
+
+		manel = new Manel(map.manel.getPosition());
+		ImageGUI.getInstance().addImage(manel);
+
+		donkeyKong = new DonkeyKong(map.donkeyKong.getPosition());
+		ImageGUI.getInstance().addImage(donkeyKong);
+
+
+
+    }
 
 	public void moveManel(Direction d) {
 		manel.move(d);
 	}
-	
+
 }

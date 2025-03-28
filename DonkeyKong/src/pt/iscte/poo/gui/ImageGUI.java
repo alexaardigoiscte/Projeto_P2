@@ -31,6 +31,8 @@ import javax.swing.SwingConstants;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.utils.Point2D;
 
+import static java.lang.System.out;
+
 /**
  * @author POO 2024
  * <p>
@@ -70,7 +72,7 @@ public class ImageGUI extends Observed {
 
 	private static ImageGUI INSTANCE;
 
-    static final String IMAGE_DIR = "images";
+    static final String IMAGE_DIR = "DonkeyKong/images";
 
     final int tileWidth = 48;
     final int tileHeight = 48;
@@ -210,6 +212,7 @@ public class ImageGUI extends Observed {
 
     private void initImages() {
         File dir = new File(IMAGE_DIR);
+
         if (dir == null) {
             //throw new FileNotFoundException();
             System.err.println("Images dir not found");
