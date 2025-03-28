@@ -6,6 +6,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Floor implements ImageTile {
 
 	public Floor() {
+		// bla
 	}
 
 	@Override
