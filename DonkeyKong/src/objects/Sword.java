@@ -17,15 +17,13 @@ public class Sword implements ImageTile {
 	}
 
 	@Override
-	public int getLayer() {
-		return 0;
-	}
-
-	@Override
 	public Point2D getPosition() {
 		return position;
 	}
 
-
+	@Override
+	public int getLayer() {
+		return 0;
+	}
 
 }

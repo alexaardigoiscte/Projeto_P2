@@ -26,6 +26,4 @@ public class Stairs implements ImageTile {
 		return position;
 	}
 
-
-
 }

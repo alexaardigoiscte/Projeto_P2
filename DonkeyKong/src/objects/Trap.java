@@ -25,4 +25,5 @@ public class Trap implements ImageTile {
 	public Point2D getPosition() {
 		return position;
 	}
+
 }

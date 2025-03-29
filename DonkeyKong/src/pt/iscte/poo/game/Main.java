@@ -1,12 +1,13 @@
 package pt.iscte.poo.game;
 
 import pt.iscte.poo.gui.ImageGUI;
+import pt.iscte.poo.observer.Observer;
 
 public class Main {
 
 	public static void main(String[] args) {
 		ImageGUI gui = ImageGUI.getInstance();
-		GameEngine engine = new GameEngine(); // GameEngine engine = GameEngine.getInstance();
+		Observer engine = GameEngine.getInstance(); // GameEngine engine = GameEngine.getInstance();
 		gui.setStatusMessage("Good luck!");
 		gui.registerObserver(engine);
 		gui.go();

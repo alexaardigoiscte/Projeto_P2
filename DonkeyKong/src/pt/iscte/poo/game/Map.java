@@ -2,6 +2,7 @@ package pt.iscte.poo.game;
 
 import objects.*;
 import pt.iscte.poo.gui.ImageGUI;
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 import java.io.File;
@@ -11,15 +12,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Map {
-    List<String> map = new ArrayList<>();
+    private List<String> map = new ArrayList<>();
     private final String room;
+
+    public Walls walls = new Walls();
+
     public Map(String room) {
         this.room = room;
     }
 
-    public Manel manel;
-
-    public DonkeyKong donkeyKong;
 
     private void scanearFicheiro() {
         try {
@@ -34,23 +35,25 @@ public class Map {
         }
     }
 
-    public void obterCoordenadasRoom() {
+    public void create() {
         scanearFicheiro();
         for (int y = 0; y < map.size() - 1; y++) {
             for (int x = 0; x < map.get(y).length(); x++) {
                 switch (map.get(y).charAt(x)) {
                     case 'W': {
-                        ImageGUI.getInstance().addImage(new Wall(new Point2D(x, y)));
+                        Point2D point = new Point2D(x, y);
+                        ImageGUI.getInstance().addImage(new Wall(point));
+                        walls.addWall(point);
                         break;
                     }
                     case 'H': {
-                        manel = new Manel(new Point2D(x, y));
-                        ImageGUI.getInstance().addImage(manel);
+                        Manel.getInstance().setPosition(new Point2D(x, y));
+                        ImageGUI.getInstance().addImage(Manel.getInstance());
                         break;
                     }
                     case 'G': {
-                        donkeyKong = new DonkeyKong(new Point2D(x, y));
-                        ImageGUI.getInstance().addImage(donkeyKong);
+                        DonkeyKong.getInstance().setPosition(new Point2D(x, y));
+                        ImageGUI.getInstance().addImage(DonkeyKong.getInstance());
                         break;
                     }
 
@@ -66,11 +69,8 @@ public class Map {
                         ImageGUI.getInstance().addImage(new Trap(new Point2D(x, y)));
                         break;
                     }
-
                 }
             }
         }
-
     }
-
 }

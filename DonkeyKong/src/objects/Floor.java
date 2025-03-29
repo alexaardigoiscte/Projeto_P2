@@ -25,4 +25,6 @@ public class Floor implements ImageTile {
 	public Point2D getPosition() {
 		return position;
 	}
+
+
 }
