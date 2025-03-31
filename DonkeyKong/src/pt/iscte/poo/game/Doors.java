@@ -1,0 +1,21 @@
+package pt.iscte.poo.game;
+
+import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.utils.Point2D;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Doors {
+
+
+    private List<ImageTile> list = new ArrayList<>();
+
+    public void addDoor(ImageTile image) {
+        list.add(image);
+    }
+
+    public List<ImageTile> getDoors() {
+        return list;
+    }
+}

@@ -2,7 +2,6 @@ package pt.iscte.poo.game;
 
 import objects.*;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 import java.io.File;
@@ -11,14 +10,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Map {
+public class Mapping {
     private List<String> map = new ArrayList<>();
-    private final String room;
-
     public Walls walls = new Walls();
+    public CollectableItems items = new CollectableItems();
 
-    public Map(String room) {
+    public Doors doors = new Doors();
+
+    public EnemyList enemyList = new EnemyList();
+    private ImageGUI gui = ImageGUI.getInstance();
+    private final String room;
+    private static Mapping INSTANCE;
+
+    public Mapping(String room) {
         this.room = room;
+    }
+
+    public static Mapping getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new Mapping("DonkeyKong/rooms/room0.txt");
+        return INSTANCE;
     }
 
 
@@ -42,31 +53,41 @@ public class Map {
                 switch (map.get(y).charAt(x)) {
                     case 'W': {
                         Point2D point = new Point2D(x, y);
-                        ImageGUI.getInstance().addImage(new Wall(point));
+                        gui.addImage(new Wall(point));
                         walls.addWall(point);
                         break;
                     }
+                    case '0': {
+                        Door door = new Door(new Point2D(x, y));
+                        doors.addDoor(door);
+                        gui.addImage(door);
+                    }
                     case 'H': {
                         Manel.getInstance().setPosition(new Point2D(x, y));
-                        ImageGUI.getInstance().addImage(Manel.getInstance());
+                        gui.addImage(Manel.getInstance());
                         break;
                     }
                     case 'G': {
                         DonkeyKong.getInstance().setPosition(new Point2D(x, y));
-                        ImageGUI.getInstance().addImage(DonkeyKong.getInstance());
+                        gui.addImage(DonkeyKong.getInstance());
+                        enemyList.addItem(DonkeyKong.getInstance());
                         break;
                     }
 
                     case 'S': {
-                        ImageGUI.getInstance().addImage(new Stairs(new Point2D(x, y)));
+                        gui.addImage(new Stairs(new Point2D(x, y)));
                         break;
                     }
                     case 's': {
-                        ImageGUI.getInstance().addImage(new Sword(new Point2D(x, y)));
+                        Sword sword = new Sword(new Point2D(x, y));
+                        gui.addImage(sword);
+                        items.addItem(sword);
                         break;
                     }
                     case 't': {
-                        ImageGUI.getInstance().addImage(new Trap(new Point2D(x, y)));
+                        Trap trap = new Trap(new Point2D(x, y));
+                        gui.addImage(trap);
+                        enemyList.addItem(trap);
                         break;
                     }
                 }

@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Walls {
 
-    private List<Point2D> walls = new ArrayList<>();
+    private List<Point2D> list = new ArrayList<>();
 
     public void addWall(Point2D point) {
-        walls.add(point);
+        list.add(point);
     }
 
     public List<Point2D> getWalls() {
-        return walls;
+        return list;
     }
 }

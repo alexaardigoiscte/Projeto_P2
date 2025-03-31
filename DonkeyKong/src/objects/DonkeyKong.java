@@ -1,50 +1,64 @@
 package objects;
 
-import pt.iscte.poo.game.Movables;
-import pt.iscte.poo.game.Walls;
-import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.game.Enemies;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class DonkeyKong implements Movables {
+import static java.lang.System.out;
 
-	private Point2D position;
-	private static Movables INSTANCE;
+public class DonkeyKong implements Enemies {
 
+    private Point2D position;
+    private static Enemies INSTANCE;
 
-	public DonkeyKong(Point2D initialPosition){
-		position = initialPosition;
-	}
+    private int currentTick = ImageGUI.getInstance().getTicks();
+    private int lastTick;
 
-	public static Movables getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new DonkeyKong(new Point2D(0, 0));
-		return INSTANCE;
-	}
-	
-	@Override
-	public String getName() {
-		return "DonkeyKong";
-	}
+    public DonkeyKong(Point2D initialPosition) {
+        position = initialPosition;
+    }
 
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
+    public static Enemies getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new DonkeyKong(new Point2D(0, 0));
+        return INSTANCE;
+    }
 
-	@Override
-	public void setPosition(Point2D point2D) {
-		position = point2D;
-	}
+    @Override
+    public String getName() {
+        return "DonkeyKong";
+    }
 
-	@Override
-	public int getLayer() {
-		// TODO Auto-generated method stub
-		return 3;
-	}
+    @Override
+    public Point2D getPosition() {
+        return position;
+    }
 
-	public void move(Direction d, Walls walls) {
-		position = position.plus(d.asVector());	
-	}
-	
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public void setPosition(Point2D point2D) {
+        position = point2D;
+    }
+
+    @Override
+    public int getLayer() {
+        // TODO Auto-generated method stub
+        return 3;
+    }
+
+    @Override
+    public void move(Direction d) {
+
+        currentTick = ImageGUI.getInstance().getTicks();
+        if (currentTick != lastTick) {
+            position = position.plus(Direction.random().asVector());
+            lastTick = currentTick;
+        }
+
+    }
 }

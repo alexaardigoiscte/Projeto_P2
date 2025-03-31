@@ -1,15 +1,9 @@
 package objects;
 
-import pt.iscte.poo.game.Collision;
-import pt.iscte.poo.game.GameEngine;
-import pt.iscte.poo.game.Movables;
-import pt.iscte.poo.game.Walls;
+import pt.iscte.poo.game.*;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
-
-import java.util.List;
 
 import static java.lang.System.out;
 
@@ -19,6 +13,11 @@ public class Manel implements Movables {
 
     private static Movables INSTANCE;
 
+    private Mapping map = Mapping.getInstance();
+    private ImageGUI gui = ImageGUI.getInstance();
+    private GameStatus gameStatus = GameStatus.getInstance();
+
+    private Point2D previousPosition;
 
     public Manel(Point2D initialPosition) {
         position = initialPosition;
@@ -53,10 +52,30 @@ public class Manel implements Movables {
 
 
     @Override
-    public void move(Direction d, Walls walls) {
-        List<Point2D> wallList = walls.getWalls();
+    public void move(Direction d) {
+        previousPosition = position;
         Collision collision = new Collision();
-        position = collision.temColisao(d, position, wallList) ? position : position.plus(d.asVector());
-    }
+        CollectItems collect = new CollectItems();
+        Attack attack = new Attack();
 
+        position = collision.oManelTemColisao(d, position, map.walls.getWalls())
+                ? position
+                : position.plus(d.asVector());
+
+        if (collect.oManelEstaSobreItem(position, map.items.getItems())) {
+            gui.removeImage(collect.getItem());
+            gui.setStatusMessage(gameStatus.getMessage());
+        }
+
+        if (attack.oManelSofreAttack(d, position, map.enemyList.getItems())) {
+            out.println("attack!");
+            Lives.getInstance().setLives(-1);
+            Lives.getInstance().setDamages();
+            position = previousPosition;
+        }
+
+        /*if (collision.oManelEstaSobreAPorta(d, position, map.doors.getDoors())) {
+            collision.
+        }*/
+    }
 }

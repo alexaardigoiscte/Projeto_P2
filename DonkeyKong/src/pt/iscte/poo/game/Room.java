@@ -2,22 +2,18 @@ package pt.iscte.poo.game;
 
 import objects.DonkeyKong;
 import objects.Manel;
-import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.System.out;
 
 public class Room {
 
 	private Movables manel = Manel.getInstance();
+	private Enemies donkeyKong = DonkeyKong.getInstance();
 
-	public List<ImageTile> tiles = new ArrayList<>();
 
-	private Map map;
+	private Mapping map = Mapping.getInstance();
 
 
 	public Room() {
@@ -25,13 +21,15 @@ public class Room {
 		FloorFill floor = new FloorFill();
 		floor.fill();
 
-		map = new Map("DonkeyKong/rooms/room0.txt");
 		map.create();
 
+		donkeyKong.move();
+
+		out.println(GameStatus.getInstance().getMessage());
     }
 
 	public void moveManel(Direction d) {
-		manel.move(d, map.walls);
+		manel.move(d);
 	}
 
 
